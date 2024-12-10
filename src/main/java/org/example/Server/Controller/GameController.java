@@ -1,8 +1,8 @@
-package org.example.Controller;
+package org.example.Server.Controller;
 
-import org.example.Model.Battlefield;
-import org.example.Model.Robot;
-import org.example.View.*;
+import org.example.Client.View.*;
+import org.example.Server.Model.Battlefield;
+import org.example.Server.Model.Robot;
 
 public class GameController {
     public static void main(String[] args) {
@@ -24,6 +24,7 @@ public class GameController {
         DisplayWinnerView displayWinnerView = new DisplayWinnerView();
         MoveRobotView moveRobotView = new MoveRobotView();
 
+        /*
         //Intro und Spielvorbereitung
         introScreenView.displayIntroScreen();
         player1.setName(askRobotNameView.askPlayerName("Spieler 1"));
@@ -44,21 +45,45 @@ public class GameController {
             robotController.changeStats(player2, displayRobotStatsView);
         }
         displayRobotStatsView.printChangeSkillsCompleteMessage(player2);
+         */
 
         //Spielfeldvorbereitungen
         battlefieldView.printPrepareMessage();
-        battlefieldController.fillBattlefield(battlefield.getMap());
-        battlefieldController.placeRobots(player1, player2, battlefield.getMap());
+        battlefieldController.fillBattlefield(battlefield);
+        System.out.println("Die Position von " + player1.getSymbol() + " ist bei (Z " + (player1.getY() + 1) + "/S " + (player1.getX() + 1) + ").");
+        System.out.println("Die Position von " + player2.getSymbol() + " ist bei (Z " + (player2.getY() + 1) + "/S " + (player2.getX() + 1) + ").");
+        battlefieldController.placeRobots(player1, player2, battlefield);
 
         //Ausgabe Startspielfeld
-        battlefieldView.printBattlefield(battlefield.getMap());
+        battlefieldView.printBattlefield(battlefield);
 
         //Spielstart
         //TODO Spielrunde
 
+        boolean player1Turn = true;
+
+        while (player1Turn == true) {
+            int moveCounter = player1.getMovementRate();
+
+            while (moveCounter > 0) {
+                char moveChoice = moveRobotView.printTurnMessageAndAskInput(player1);
+
+                if (battlefieldController.isMoveValid(player1, moveChoice, battlefield)) {
+                    robotController.move(moveChoice, player1, battlefield, battlefieldController);
+                    moveCounter--;
+
+                    moveRobotView.printPlayerTurnMessage(player1);
+                    battlefieldView.printBattlefield(battlefield);
+                } else {
+                    moveRobotView.printErrorMoveMessage();
+                }
+            }
+
+        }
+            player1Turn = false;
+
     }
 
-
-
-
 }
+
+

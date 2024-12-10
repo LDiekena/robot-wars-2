@@ -1,15 +1,16 @@
-package org.example.Model;
+package org.example.Server.Model;
 
 public class Battlefield {
     int width;
     int height;
-    String[][] map;
+    String[] map;
+
 
     //Konstruktor
-    public Battlefield(int width, int height) {
+    public Battlefield(int height, int width) {
         this.width = width;
         this.height = height;
-        this.map = new String[width][height];
+        this.map = new String[width * height];
     }
 
     //Getter
@@ -21,7 +22,7 @@ public class Battlefield {
         return height;
     }
 
-    public String[][] getMap() {
+    public String[] getMap() {
         return map;
     }
 
@@ -34,7 +35,7 @@ public class Battlefield {
         this.height = height;
     }
 
-    public void setMap(String[][] map) {
+    public void setMap(String[] map) {
         this.map = map;
     }
 }

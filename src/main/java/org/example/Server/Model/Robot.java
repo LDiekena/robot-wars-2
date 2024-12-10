@@ -1,4 +1,4 @@
-package org.example.Model;
+package org.example.Server.Model;
 
 public class Robot {
     String name;
@@ -6,8 +6,8 @@ public class Robot {
     int attackRange;
     int attackDamage;
     int health;
-    int x;
-    int y;
+    int x; //column
+    int y; //row
     int movementRate;
     boolean isKnockedOut;
     int skillpoints;
@@ -110,6 +110,6 @@ public class Robot {
 
     //Methoden
     public void reduceHealth(int damage) {
-        setHealth(getHealth()- damage);
+        setHealth(getHealth() - damage);
     }
 }

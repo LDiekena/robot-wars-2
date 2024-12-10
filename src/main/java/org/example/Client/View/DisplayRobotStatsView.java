@@ -1,6 +1,6 @@
-package org.example.View;
+package org.example.Client.View;
 
-import org.example.Model.Robot;
+import org.example.Server.Model.Robot;
 
 import java.util.Scanner;
 

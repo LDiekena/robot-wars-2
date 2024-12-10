@@ -1,7 +1,8 @@
-package org.example.Controller;
+package org.example.Server.Controller;
 
-import org.example.Model.Robot;
-import org.example.View.DisplayRobotStatsView;
+import org.example.Server.Model.Battlefield;
+import org.example.Server.Model.Robot;
+import org.example.Client.View.DisplayRobotStatsView;
 
 public class RobotController {
     //Methode zur Abfrage ob Usereingabe gültig ist
@@ -122,6 +123,25 @@ public class RobotController {
         } else {
             displayRobotStatsView.printErrorSkillchange();
         }
+    }
 
+    public void move(char moveInput, Robot robot, Battlefield battlefield, BattlefieldController battlefieldController) {
+        battlefield.getMap()[battlefieldController.getRobotPositionOnBattlefield(robot, battlefield)] = " [ ]";
+
+        if (moveInput == '8') {
+            robot.setY(robot.getY() - 1);
+            battlefield.getMap()[battlefieldController.getRobotPositionOnBattlefield(robot, battlefield)] = " [" + robot.getSymbol() + "]";
+        } else if (moveInput == '4') {
+            robot.setX(robot.getX() - 1);
+            battlefield.getMap()[battlefieldController.getRobotPositionOnBattlefield(robot, battlefield)] = " [" + robot.getSymbol() + "]";
+        } else if (moveInput == '5') {
+            battlefield.getMap()[battlefieldController.getRobotPositionOnBattlefield(robot, battlefield)] = " [" + robot.getSymbol() + "]";
+        } else if (moveInput == '6') {
+            robot.setX(robot.getX() + 1);
+            battlefield.getMap()[battlefieldController.getRobotPositionOnBattlefield(robot, battlefield)] = " [" + robot.getSymbol() + "]";
+        } else if (moveInput == '2') {
+            robot.setY(robot.getY() + 1);
+            battlefield.getMap()[battlefieldController.getRobotPositionOnBattlefield(robot, battlefield)] = " [" + robot.getSymbol() + "]";
+        }
     }
 }
