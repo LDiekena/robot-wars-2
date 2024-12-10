@@ -49,8 +49,6 @@ public class BattlefieldController {
         }
     }
 
-
-    //TODO Bug finden!
     //Methode Zuggültigkeit
     public boolean isMoveValid(Robot robot, char turnInput, Battlefield battlefield) {
         int robotPosition = robot.getY() * battlefield.getWidth() + robot.getX();
@@ -58,9 +56,9 @@ public class BattlefieldController {
             return false;
         } else if (robotPosition <= (battlefield.getWidth()) && robotPosition >= 0 && turnInput == '8') {
             return false;
-        } else if (robotPosition % battlefield.getWidth() - 1 == 0 && turnInput == '6') {
+        } else if ((robotPosition % battlefield.getWidth()) == (battlefield.getWidth() - 1) && turnInput == '6') {
             return false;
-        } else if (robotPosition % battlefield.getWidth() == 0 || robotPosition == 0 && turnInput == '4') {
+        } else if ((robotPosition % battlefield.getWidth()) == 0 && turnInput == '4') {
             return false;
         } else if (turnInput != '2' && turnInput != '4' && turnInput != '5' && turnInput != '6' && turnInput != '8') {
             return false;
