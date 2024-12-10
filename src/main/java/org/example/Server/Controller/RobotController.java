@@ -144,4 +144,8 @@ public class RobotController {
             battlefield.getMap()[battlefieldController.getRobotPositionOnBattlefield(robot, battlefield)] = " [" + robot.getSymbol() + "]";
         }
     }
+
+    public void attack(Robot currentRobot, Robot enemyRobot) {
+        enemyRobot.setHealth(enemyRobot.getHealth() - currentRobot.getAttackDamage());
+    }
 }

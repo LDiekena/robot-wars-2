@@ -11,9 +11,10 @@ public class Robot {
     int movementRate;
     boolean isKnockedOut;
     int skillpoints;
+    boolean isTurn;
 
     //Konstruktor
-    public Robot(String name, int y, int x, int health, int movementRate, int attackDamage, int attackRange, int skillpoints, String symbol, boolean isKnockedOut) {
+    public Robot(String name, int y, int x, int health, int movementRate, int attackDamage, int attackRange, int skillpoints, String symbol, boolean isKnockedOut, boolean isTurn) {
         this.name = name;
         this.movementRate = movementRate;
         this.y = y;
@@ -24,6 +25,7 @@ public class Robot {
         this.symbol = symbol;
         this.isKnockedOut = isKnockedOut;
         this.skillpoints = skillpoints;
+        this.isTurn = isTurn;
     }
 
     //Getter
@@ -67,6 +69,10 @@ public class Robot {
         return skillpoints;
     }
 
+    public boolean getTurn() {
+        return isTurn;
+    }
+
     //Setter
     public void setName(String name) {
         this.name = name;
@@ -108,8 +114,8 @@ public class Robot {
         this.skillpoints = skillpoints;
     }
 
-    //Methoden
-    public void reduceHealth(int damage) {
-        setHealth(getHealth() - damage);
+    public void setTurn(boolean isTurn) {
+        this.isTurn = isTurn;
     }
+
 }

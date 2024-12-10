@@ -10,11 +10,12 @@ public class GameController {
         //Controller
         BattlefieldController battlefieldController = new BattlefieldController();
         RobotController robotController= new RobotController();
+        GameController gameController = new GameController();
 
         //Model
         Battlefield battlefield = new Battlefield(10,15);
-        Robot player1 = new Robot("", battlefieldController.randomNumberRow(), battlefieldController.randomNumberColumn(), 1,1,1,1,10, "X", false);
-        Robot player2 = new Robot("", battlefieldController.randomNumberRow(), battlefieldController.randomNumberColumn(), 1,1,1,1,10, "O",false);
+        Robot player1 = new Robot("", battlefieldController.randomNumberRow(), battlefieldController.randomNumberColumn(), 1,1,1,1,10, "X", false, true);
+        Robot player2 = new Robot("", battlefieldController.randomNumberRow(), battlefieldController.randomNumberColumn(), 1,1,1,1,10, "O",false, false);
 
         //View
         IntroScreenView introScreenView = new IntroScreenView();
@@ -23,6 +24,7 @@ public class GameController {
         DisplayRobotStatsView displayRobotStatsView = new DisplayRobotStatsView();
         DisplayWinnerView displayWinnerView = new DisplayWinnerView();
         MoveRobotView moveRobotView = new MoveRobotView();
+        AttackRobotView attackRobotView = new AttackRobotView();
 
         /*
         //Intro und Spielvorbereitung
@@ -50,38 +52,84 @@ public class GameController {
         //Spielfeldvorbereitungen
         battlefieldView.printPrepareMessage();
         battlefieldController.fillBattlefield(battlefield);
-        System.out.println("Die Position von " + player1.getSymbol() + " ist bei (Z " + (player1.getY() + 1) + "/S " + (player1.getX() + 1) + ").");
-        System.out.println("Die Position von " + player2.getSymbol() + " ist bei (Z " + (player2.getY() + 1) + "/S " + (player2.getX() + 1) + ").");
         battlefieldController.placeRobots(player1, player2, battlefield);
 
         //Ausgabe Startspielfeld
         battlefieldView.printBattlefield(battlefield);
 
         //Spielstart
-        //TODO Spielrunde
+        //TODO Bugfix Reichweite nicht richtig? Abfrage nach Angriff wird nicht gemacht...
+        while (player1.getHealth() > 0 || player2.getHealth() > 0) {
+            while (player1.getTurn()) {
+                if (battlefieldController.robotInAttackRange(player1, player2, battlefield)) {
+                    int choice = attackRobotView.printEnemyInRangeMessage(player1, player2);
+                    while (choice != 1 || choice != 2) {
+                        choice = attackRobotView.printErrorMessageAttackOrMoveChoiceAndAskAgain();
+                    }
 
-        boolean player1Turn = true;
+                    if (attackRobotView.printEnemyInRangeMessage(player1, player2) == 1) {
+                        robotController.attack(player1, player2);
+                        player1.setTurn(false);
+                    } else {
+                        gameController.playerTurn(player1, player2, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
+                    }
 
-        while (player1Turn == true) {
-            int moveCounter = player1.getMovementRate();
-
-            while (moveCounter > 0) {
-                char moveChoice = moveRobotView.printTurnMessageAndAskInput(player1);
-
-                if (battlefieldController.isMoveValid(player1, moveChoice, battlefield)) {
-                    robotController.move(moveChoice, player1, battlefield, battlefieldController);
-                    moveCounter--;
-
-                    moveRobotView.printPlayerTurnMessage(player1);
-                    battlefieldView.printBattlefield(battlefield);
                 } else {
-                    moveRobotView.printErrorMoveMessage();
+                    gameController.playerTurn(player1, player2, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
                 }
             }
 
-        }
-            player1Turn = false;
+            while (player2.getTurn()) {
+                if (battlefieldController.robotInAttackRange(player2, player1, battlefield)) {
+                    int choice = attackRobotView.printEnemyInRangeMessage(player2, player1);
+                    while (choice != 1 || choice != 2) {
+                        choice = attackRobotView.printErrorMessageAttackOrMoveChoiceAndAskAgain();
+                    }
 
+                    if (attackRobotView.printEnemyInRangeMessage(player2, player1) == 1) {
+                        robotController.attack(player2, player1);
+                        player2.setTurn(false);
+                    } else {
+                        gameController.playerTurn(player1, player1, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
+                    }
+
+                } else {
+                    gameController.playerTurn(player2, player1, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
+                }
+            }
+        }
+
+
+    }
+
+    public void playerTurn(Robot currentRobot, Robot enemyRobot, MoveRobotView moveRobotView, BattlefieldController battlefieldController, RobotController robotController, BattlefieldView battlefieldView, Battlefield battlefield) {
+        int moveCounter = currentRobot.getMovementRate();
+
+        while (moveCounter > 0) {
+
+            //Bewegungszug
+            char moveChoice = moveRobotView.printTurnMessageAndAskInput(currentRobot);
+
+            if (battlefieldController.isMoveValid(currentRobot, moveChoice, battlefield)) {
+                robotController.move(moveChoice, currentRobot, battlefield, battlefieldController);
+                moveCounter--;
+
+                moveRobotView.printPlayerTurnMessage(currentRobot);
+                battlefieldView.printBattlefield(battlefield);
+            } else {
+                moveRobotView.printErrorMoveMessage();
+            }
+            /*
+            //Angriffszug
+            if(battlefieldController.robotInAttackRange(currentRobot, enemyRobot, battlefield)) {
+                robotController.attack(currentRobot, enemyRobot);
+                moveCounter = 0; //Wenn Angriff ausgeführt wird Zug beendet auch wenn noch Züge übrig wären
+            }
+
+             */
+        }
+        currentRobot.setTurn(false);
+        enemyRobot.setTurn(true);
     }
 
 }

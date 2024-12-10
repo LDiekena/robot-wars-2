@@ -67,9 +67,14 @@ public class BattlefieldController {
         }
     }
 
-    public boolean robotInAttackRange(Robot currentRobot, Robot enemyRobot) {
-        //TODO robotInAttackRange()
-        return true;
+    //Methode Gegner ist in Angriffsreichweite
+    public boolean robotInAttackRange(Robot currentRobot, Robot enemyRobot, Battlefield battlefield) {
+        int diff = Math.abs(getRobotPositionOnBattlefield(currentRobot, battlefield) - getRobotPositionOnBattlefield(enemyRobot, battlefield));
+        if (diff <= currentRobot.getAttackRange()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
