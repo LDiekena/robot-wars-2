@@ -19,4 +19,9 @@ public class AttackRobotView {
         System.out.println("Fehlerhafte Eingabe, bitte versuche es erneut: ");
         return sc.next().charAt(0);
     }
+
+    public void printAttackSuccessfulMessage(Robot currentRobot, Robot enemyRobot) {
+        System.out.println(currentRobot.getName() + " hat " + currentRobot.getAttackDamage() + " schaden an " + enemyRobot.getName() + " verursacht! Damit sink das verbleibende" +
+                " Leben von " + enemyRobot.getName() + " auf " + enemyRobot.getHealth() + ".");
+    }
 }

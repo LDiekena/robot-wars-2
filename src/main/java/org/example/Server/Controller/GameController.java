@@ -26,7 +26,7 @@ public class GameController {
         MoveRobotView moveRobotView = new MoveRobotView();
         AttackRobotView attackRobotView = new AttackRobotView();
 
-        /*
+
         //Intro und Spielvorbereitung
         introScreenView.displayIntroScreen();
         player1.setName(askRobotNameView.askPlayerName("Spieler 1"));
@@ -47,7 +47,7 @@ public class GameController {
             robotController.changeStats(player2, displayRobotStatsView);
         }
         displayRobotStatsView.printChangeSkillsCompleteMessage(player2);
-         */
+
 
         //Spielfeldvorbereitungen
         battlefieldView.printPrepareMessage();
@@ -58,48 +58,63 @@ public class GameController {
         battlefieldView.printBattlefield(battlefield);
 
         //Spielstart
-        //TODO Bugfix Reichweite nicht richtig? Abfrage nach Angriff wird nicht gemacht...
-        while (player1.getHealth() > 0 || player2.getHealth() > 0) {
-            while (player1.getTurn()) {
-                if (battlefieldController.robotInAttackRange(player1, player2, battlefield)) {
-                    int choice = attackRobotView.printEnemyInRangeMessage(player1, player2);
-                    while (choice != 1 || choice != 2) {
-                        choice = attackRobotView.printErrorMessageAttackOrMoveChoiceAndAskAgain();
-                    }
+        while (player1.getHealth() > 0 && player2.getHealth() > 0) {
 
-                    if (attackRobotView.printEnemyInRangeMessage(player1, player2) == 1) {
-                        robotController.attack(player1, player2);
-                        player1.setTurn(false);
+            if (player1.getHealth() <= 0) {
+                displayWinnerView.printWinner(player2, player1);
+            } else {
+
+                while (player1.getTurn()) {
+
+                    if (battlefieldController.robotInAttackRange(player1, player2, battlefield)) {
+                        int choice = attackRobotView.printEnemyInRangeMessage(player1, player2);
+
+                        while (choice != '1' && choice != '2') {
+                            choice = attackRobotView.printErrorMessageAttackOrMoveChoiceAndAskAgain();
+                        }
+
+                        if (choice == '1') {
+                            robotController.attack(player1, player2);
+                            attackRobotView.printAttackSuccessfulMessage(player1, player2);
+                            player1.setTurn(false);
+                            player2.setTurn(true);
+                        } else {
+                            gameController.playerTurn(player1, player2, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
+                        }
+
                     } else {
                         gameController.playerTurn(player1, player2, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
                     }
-
-                } else {
-                    gameController.playerTurn(player1, player2, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
                 }
             }
 
-            while (player2.getTurn()) {
-                if (battlefieldController.robotInAttackRange(player2, player1, battlefield)) {
-                    int choice = attackRobotView.printEnemyInRangeMessage(player2, player1);
-                    while (choice != 1 || choice != 2) {
-                        choice = attackRobotView.printErrorMessageAttackOrMoveChoiceAndAskAgain();
-                    }
+            if(player2.getHealth() <= 0) {
+                displayWinnerView.printWinner(player1, player2);
+            } else {
+                while (player2.getTurn()) {
 
-                    if (attackRobotView.printEnemyInRangeMessage(player2, player1) == 1) {
-                        robotController.attack(player2, player1);
-                        player2.setTurn(false);
+                    if (battlefieldController.robotInAttackRange(player2, player1, battlefield)) {
+                        int choice = attackRobotView.printEnemyInRangeMessage(player2, player1);
+
+                        while (choice != '1' && choice != '2') {
+                            choice = attackRobotView.printErrorMessageAttackOrMoveChoiceAndAskAgain();
+                        }
+
+                        if (choice == '1') {
+                            robotController.attack(player2, player1);
+                            attackRobotView.printAttackSuccessfulMessage(player2, player1);
+                            player2.setTurn(false);
+                            player1.setTurn(true);
+                        } else {
+                            gameController.playerTurn(player1, player1, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
+                        }
+
                     } else {
-                        gameController.playerTurn(player1, player1, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
+                        gameController.playerTurn(player2, player1, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
                     }
-
-                } else {
-                    gameController.playerTurn(player2, player1, moveRobotView, battlefieldController, robotController, battlefieldView, battlefield);
                 }
             }
         }
-
-
     }
 
     public void playerTurn(Robot currentRobot, Robot enemyRobot, MoveRobotView moveRobotView, BattlefieldController battlefieldController, RobotController robotController, BattlefieldView battlefieldView, Battlefield battlefield) {
