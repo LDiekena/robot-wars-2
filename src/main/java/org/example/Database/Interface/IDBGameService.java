@@ -1,5 +1,6 @@
 package org.example.Database.Interface;
 
+import org.example.Database.GameEntitiy;
 import org.example.Database.MoveEntity;
 import org.example.Server.Model.Robot;
 import org.hibernate.Session;
@@ -7,6 +8,8 @@ import org.hibernate.Session;
 public interface IDBGameService {
 
     void createGame(Session session, int battlefieldID, Robot[] robots, MoveEntity[] moves, String status);
+
+    GameEntitiy getGame(Session session, int gameID);
 
     void updateGameJoinRobot(Session session, int robotID, int gameID); //???
 

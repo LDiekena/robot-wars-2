@@ -1,4 +1,4 @@
-package org.example.Interface;
+package org.example.Server.Interface;
 
 public interface IBattlefieldService {
 }

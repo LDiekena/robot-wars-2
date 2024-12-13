@@ -1,7 +1,6 @@
 package org.example.Server.Service;
 
-import org.example.Interface.IGameService;
-import org.example.Server.Model.Robot;
+import org.example.Server.Interface.IGameService;
 
 //extends/ implements?
 public class GameService implements IGameService {

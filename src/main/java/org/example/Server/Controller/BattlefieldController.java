@@ -67,7 +67,6 @@ public class BattlefieldController {
         }
     }
 
-    //TODO: Bugfix Reichweite auch bei range > 1
     //Methode Gegner ist in Angriffsreichweite
     public boolean robotInAttackRange(Robot currentRobot, Robot enemyRobot, Battlefield battlefield) {
         int diff = Math.abs(getRobotPositionOnBattlefield(currentRobot, battlefield) - getRobotPositionOnBattlefield(enemyRobot, battlefield));
