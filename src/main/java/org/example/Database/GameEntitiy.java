@@ -1,4 +1,4 @@
-package org.example.Hibernate;
+package org.example.Database;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

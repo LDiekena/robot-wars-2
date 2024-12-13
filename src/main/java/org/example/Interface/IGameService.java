@@ -1,6 +1,6 @@
 package org.example.Interface;
 
-public class IGameService {
+public interface IGameService {
 
 
 }

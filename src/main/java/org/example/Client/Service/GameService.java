@@ -1,4 +1,6 @@
 package org.example.Client.Service;
 
-public class GameService {
+import org.example.Client.Interface.IClientGameService;
+
+public class GameService implements IClientGameService {
 }

@@ -4,7 +4,7 @@ import org.example.Interface.IGameService;
 import org.example.Server.Model.Robot;
 
 //extends/ implements?
-public class GameService extends IGameService {
+public class GameService implements IGameService {
 
     //@Override
 

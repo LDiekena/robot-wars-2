@@ -1,4 +1,4 @@
-package org.example.Hibernate;
+package org.example.Database;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
