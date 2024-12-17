@@ -1,15 +1,13 @@
 package org.example.Database.Service;
 
-import org.example.Database.Interface.IDBRobotService;
-import org.example.Database.RobotEntity;
-import org.example.Server.Model.Robot;
+import org.example.Database.Interface.IRobotService;
+import org.example.Database.Model.Robot;
 import org.hibernate.Session;
 
-public class DBRobotService implements IDBRobotService {
+public class RobotService {
 
-    @Override
     public void createRobot(Session session, Robot robot) {
-        RobotEntity robotEntity = new RobotEntity();
+        Robot robotEntity = new Robot();
         robotEntity.setName(robot.getName());
         robotEntity.setHealth(robot.getHealth());
         robotEntity.setAttackDamage(robot.getAttackDamage());
@@ -20,13 +18,13 @@ public class DBRobotService implements IDBRobotService {
         session.getTransaction().commit();
     }
 
-    public RobotEntity getRobot(Session session, int robotID) {
-        RobotEntity robot = session.get(RobotEntity.class,robotID);
+    public Robot getRobot(Session session, int robotID) {
+        Robot robot = session.get(Robot.class,robotID);
         return robot;
     }
     
-    public RobotEntity[] getRobots(Session session, int gameID) {
-        RobotEntity[] robots = new RobotEntity[0];
+    public Robot[] getRobots(Session session, int gameID) {
+        Robot[] robots = new Robot[0];
 
         //TODO: Count wie viele Roboter sich in dem Spiel befinden und ziehe jeden davon aus der DB und füge sie in eine Liste ein, die dann zurückgegeben wird
 

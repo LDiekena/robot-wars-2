@@ -1,4 +1,4 @@
-package org.example.Database;
+package org.example.Database.Model;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,8 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="MoveEntity")
-public class MoveEntity {
+@Table(name="Move")
+public class Move {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +23,13 @@ public class MoveEntity {
     @Column(name = "movementType")
     private String movmentType;
 
-    @Column(name = "mapIndex")
-    private int mapIndex;
+    @Column(name = "battlefieldIndex")
+    private int battlefieldIndex;
 
     @Column(name = "align")
     private String align;
 
-
+    //Getter
     public int getMoveID() {
         return moveID;
     }
@@ -42,14 +42,15 @@ public class MoveEntity {
         return movmentType;
     }
 
-    public int getMapIndex() {
-        return mapIndex;
+    public int getBattlefieldIndex() {
+        return battlefieldIndex;
     }
 
     public String getAlign() {
         return align;
     }
 
+    //Setter
     public void setMoveID(int moveID) {
         this.moveID = moveID;
     }
@@ -62,11 +63,16 @@ public class MoveEntity {
         this.movmentType = movmentType;
     }
 
-    public void setMapIndex(int mapIndex) {
-        this.mapIndex = mapIndex;
+    public void setBattlefieldIndex(int battlefieldIndex) {
+        this.battlefieldIndex = battlefieldIndex;
     }
 
     public void setAlign(String align) {
         this.align = align;
     }
 }
+
+
+
+//TODO: Note an mich; GET moves = alle moves die nach deinem letzten move passiert sind um den eigenen Client dahingegehend zu aktualisieren!
+//TODO: Note; Zug durch END beendet und dann ist der nächste Spieler dran

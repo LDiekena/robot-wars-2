@@ -1,4 +1,4 @@
-package org.example.Database;
+package org.example.Database.Model;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,8 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="RobotEntity")
-public class RobotEntity {
+@Table(name="Robot")
+public class Robot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +32,7 @@ public class RobotEntity {
     @Column(name = "movementRate")
     private int movementRate;
 
-
-
+    //Getter
     public int getRobotID() {
         return robotID;
     }
@@ -58,6 +57,7 @@ public class RobotEntity {
         return movementRate;
     }
 
+    //Setter
     public void setRobotID(int robotID) {
         this.robotID = robotID;
     }

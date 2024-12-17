@@ -10,6 +10,6 @@
         <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
         <property name="hibernate.hbm2ddl.auto">none</property>
         <property name="hibernate.show_sql">False</property>
-        <mapping class="hibernate.KundeEntity"/>
+        <mapping class="hibernate.Robot"/>
     </session-factory>
 </hibernate-configuration>

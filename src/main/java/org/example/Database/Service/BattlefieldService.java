@@ -1,4 +1,4 @@
 package org.example.Database.Service;
 
-public class DBGameService {
+public class BattlefieldService {
 }

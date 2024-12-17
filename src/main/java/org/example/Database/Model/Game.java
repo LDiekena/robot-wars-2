@@ -1,4 +1,4 @@
-package org.example.Database;
+package org.example.Database.Model;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,60 +9,62 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="GameEntity")
-public class GameEntitiy {
+@Table(name="Game")
+public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="gameID")
     private int gameID;
 
-    @Column(name = "map")
-    private int map;
+    @Column(name = "battlefield")
+    private int battlefield;
 
     @Column(name = "robots")
-    private RobotEntity[] robotEntities;
+    private Robot[] robots;
 
     @Column(name = "move")
-    private MoveEntity[] moveEntities;
+    private Move[] moves;
 
     @Column(name = "status")
     private String status;
 
+    //Getter
     public int getGameID() {
         return gameID;
     }
 
     public int getMap() {
-        return map;
+        return battlefield;
     }
 
-    public RobotEntity[] getRobots() {
-        return robotEntities;
+    public Robot[] getRobots() {
+        return robots;
     }
 
-    public MoveEntity[] getMoves() {
-        return moveEntities;
+    public Move[] getMoves() {
+        return moves;
     }
 
     public String getStatus() {
         return status;
     }
 
+    //Setter
     public void setGameID(int gameID) {
         this.gameID = gameID;
     }
 
-    public void setMap(int map) {
-        this.map = map;
+    public void setBattlefield(int battlefield) {
+        this.battlefield = battlefield;
     }
 
-    public void setRobotEntities(RobotEntity[] robotEntities) {
-        this.robotEntities = robotEntities;
+    public void setRobots(Robot[] robots) {
+        this.robots = robots;
     }
 
-    public void setMoveEntities(MoveEntity[] moveEntities) {
-        this.moveEntities = moveEntities;
+    public void setMoves(Move[] moves) {
+        this.moves = moves;
     }
 
     public void setStatus(String status) {

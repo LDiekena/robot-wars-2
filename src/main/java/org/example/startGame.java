@@ -1,8 +1,6 @@
 package org.example;
 
 import org.example.Client.View.*;
-import org.example.Database.Interface.IDBRobotService;
-import org.example.Database.Service.DBRobotService;
 import org.example.Server.Controller.BattlefieldController;
 import org.example.Server.Controller.GameController;
 import org.example.Server.Controller.RobotController;
